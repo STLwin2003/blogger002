@@ -33,10 +33,16 @@ app.use(
   }) //setting up the session in the sever
 ); // this is part of step 7 in index.js
 
-// step1 >>  apply connection the mongodb in database
-mongoose.connect("mongodb://127.0.0.1/blogger002db");
+mongoose.connect(
+  "mongodb+srv://shinthant:shin2003@cluster0.lickxmu.mongodb.net/?retryWrites=true&w=majority"
+);
 var db = mongoose.connection;
 db.on("error", console.error.bind("MongoDB connection errror at blogger002"));
+
+// step1 >>  apply connection the mongodb in database
+// mongoose.connect("mongodb://127.0.0.1/blogger002db");
+// var db = mongoose.connection;
+// db.on("error", console.error.bind("MongoDB connection errror at blogger002"));
 
 app.use(function (req, res, next) {
   res.locals.user = req.session.user; // receive data from the index.js // session/router.post.login

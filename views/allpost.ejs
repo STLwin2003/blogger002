@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="retro">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Post</title>
+    <!-- <style>
+        div{
+            width : 300px;
+            height : 330px;
+            background-color: antiquewhite;
+            padding : 12px;
+            border : 3px solid gray;
+            border-radius: 12px;
+            margin : 10px;
+            display : inline-block;
+        }
+    </style> -->
+    <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+    <% include ./partials/navbar %> 
+
+
+    <div class="text-center text-3xl">All Post</div>
+    
+    <% for(var i=0;i < posts.length; i++){%>
+        <div class="card w-96 bg-base-500 shadow-xl inline-block m-2">
+            <figure class="px-10 pt-10">
+              <img src="<%= posts[i].image %>" alt="<%= posts[i].title %>" class="rounded-xl h-69 "  />
+            </figure>
+            <div class="card-body items-center text-center">
+              <h2 class="card-title"><%= posts[i].title %></h2>
+              <p><%= posts[i].author.name %></p>
+              <p><%= posts[i].content %></p>
+              <div class="card-actions">
+                <a href="/postdetail/<%= posts[i]._id %>" class="btn btn-primary"  >More Details</a>
+              </div>
+            </div>
+          </div>
+
+        <!-- <div>
+            <h2><%= posts[i].title %></h2>
+            <p><%= posts[i].author.name %></p>
+            <img src="<%= posts[i].image %>" alt="" width="250px" height="150px">
+            <p><%= posts[i].content %></p>
+            <a href="/postdetail/<%= posts[i]._id %>"><button>More detail</button></a>
+        </div>  -->
+
+    <%}%>
+</body>
+</html>

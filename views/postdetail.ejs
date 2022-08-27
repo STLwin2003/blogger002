@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="valentine">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Detail</title>
+    <script src="/javascripts/jquery/jquery-3.6.0.min.js"></script>
+    <style>
+        #section1 {
+            width : 100%;
+            height : 60%;
+            background-color: gray;
+            margin: 30px;
+        }
+        #section11 {
+            width : 40%;
+
+            float : left; 
+        }
+        #section12 {
+            width : 50%;
+            float : right;
+        }
+        /*  this is step 22 now */
+        #btnlogin {
+            padding :8px 20px;
+            background-color: lightgreen;
+            border-radius: 4px;
+        }
+        #text-in {
+            display : inline-block;
+
+        }
+         #comment {
+            display : block;
+            width : 400px;
+        } 
+        /* #btncomment {
+            padding : 4px;
+            margin-top : 5px;
+            width : 45%;
+            background-color: lightgrey;
+            border-radius: 5px; */
+        
+        #section2 {
+            display : block;
+            margin-top : 30%;
+        }
+        .com-rep {
+            border: 1px solid orange;
+            margin : 10px;
+            padding : 10px;
+        }
+        .rep-body{
+            text-align : end;
+        }
+        /* this is step 25 */
+        
+    </style>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+    <% include ./partials/navbar %>
+    <h1>Post Detail</h1>
+    <!-- this is step 20 // Post detail public features -->
+    
+    
+    <div id="section1">
+        <section class="text-gray-600 body-font overflow-hidden">
+        <div class="container px-5 py-24 mx-auto">
+          <div class="lg:w-4/5 mx-auto flex flex-wrap">
+            <img alt="ecommerce" class="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded" src="<%= post.image %>">
+            <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
+              <h2 class="text-sm title-font text-gray-500 tracking-widest"><%= post.title%></h2>
+              <h1 class="text-gray-900 text-3xl title-font font-medium mb-1 "><%= post.author.name %></h1>
+              <div>
+                <% if (locals.user){%> <% if(favStatus.length > 0) {%>
+                    <button class="btn btn-sm" onclick="followauthor('<%= post.author._id %>', 'unfollow')">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block" viewBox="0 0 20 20" fill="red">
+                            <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
+                          </svg>
+                        Unfollow</button>
+                <%}else{%>
+                <button class="btn btn-class" onclick="followauthor('<%= post.author._id %>', 'follow')" >
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block  " viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
+                      </svg>
+                    Follow</button>
+                <%}%> 
+                <%}%>
+                <!-- like and unlike part -->
+                <% if (locals.user) {%> <% if(reactStatus.length > 0) {%>
+                    <button class="btn btn-dafault btn-sm mb-2" onclick="givelike('<%= post._id %>','unlike') ">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke="blue" stroke-linejoin="round" d="M10 14H5.236a2 2 0 01-1.789-2.894l3.5-7A2 2 0 018.736 3h4.018a2 2 0 01.485.06l3.76.94m-7 10v5a2 2 0 002 2h.096c.5 0 .905-.405.905-.904 0-.715.211-1.413.608-2.008L17 13V4m-7 10h2m5-10h2a2 2 0 012 2v6a2 2 0 01-2 2h-2.5" />
+                      </svg>
+                    </button>
+                <%}else{%>
+                <button class="btn btn-dafault btn-sm mb-2" onclick="givelike('<%= post._id %>','like') ">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke="red" stroke-linejoin="round" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5" />
+                      </svg>
+                </button>
+                <%}%>
+                <%}%>
+              </div>
+              <div class="flex mb-4">
+                <%= post.created %>
+              </div>
+              <div class="flex mt-3 items-center pb-5 border-b-2 border-gray-100 mb-3">
+              </div>
+              <p class="leading-relaxed"><%= post.content %></p>
+              <div class="flex mt-3 items-center pb-5 border-b-2 border-gray-100 mb-3">
+              </div>
+              <p>Total like &nbsp; &nbsp;&nbsp;&nbsp; <%= post.like.length %> </p>
+              <div class="flex mt-3 items-center pb-5 border-b-2 border-gray-100 mb-3">
+            </div>
+              <% if(locals.user){%>
+                <div>
+                    <textarea class="textarea textarea-primary" placeholder="Comment" rows="4" clos="88" id="comment" ></textarea>
+                    <div class="text-start">
+                        <button id="btncomment" class="btn  btn-primary btn-sm" onclick="givecomment('<%= post._id%>', '<%= post.author._id%>') ">comment</button>
+                    </div>
+                    
+                </div>
+                <%}else{%>
+              <div class="flex">
+                <span class="title-font font-medium text-xl text-gray-900">Please login or register first idiot mf</span>
+                <a href="/login" class="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded">Login</a>
+                <%}%>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+        </section>
+             
+
+
+      <% for ( var i = 0; i < comments.length; i++){%>  
+      <div class="border-b-2 border-indigo-600 m-1 ">
+            <div class="card w-3/5 rounded-lg mr-auto shadow-xl m-4 bg-yellow-200 ">
+                <div class="card-body">
+                    <h2 class="card-title"><%=comments[i].commenter.name %></h2>
+                    <h3><%= comments[i].created %></h3>
+                    <p><%=comments[i].comment %></p>
+                </div>
+            </div>
+            <% if (comments[i].reply){%>
+            <div >
+                <div class="card-body"> 
+                    <h2 class=" text-right font-bold text-xl"><%= post.author.name %></h2>
+                    <h3 class="font-thin text-right"><%= comments[i].updated %></h3>
+                    <p class="font-light text-right"><%=comments[i].reply%></p>
+                </div>
+                <div class="flex items-center pb-5 border-b-2 border-gray-100 ">
+                </div>
+             </div>
+             <%}%>    
+      </div>
+      <%}%> 
+
+
+      <!--
+        <div id="section11">
+            <img src="<%= post.image %>" alt="" width-="450px" height="350px">
+        </div>
+        <div id="section12">
+            <h1><%= post.title%></h1>
+            <h4><%= post.author.name%> &nbsp; &nbsp; &nbsp; <% if (locals.user){%>
+                <% if(favStatus.length > 0) {%>
+                    <button onclick="followauthor('<%= post.author._id %>', 'unfollow')">Unfollow</button>
+                <%}else{%>
+                <button onclick="followauthor('<%= post.author._id %>', 'follow')" >Follow</button>
+            <%}%> <%}%>
+            </h4>
+            <div> 
+               
+                <% if (locals.user) {%> <% if(reactStatus.length > 0) {%>
+                    <button onclick="givelike('<%= post._id %>','unlike') ">Unlike</button>
+                <%}else{%>
+                <button onclick="givelike('<%= post._id %>','like') ">Like</button>
+                <%}%>
+                <%}%>
+           <div>
+            <h5><%= post.created %></h5>
+            <p><%= post.content%></p>
+            <hr>
+            <p>Total like &nbsp; &nbsp;&nbsp;&nbsp; <%= post.like.length %> </p>
+            <hr>
+            <div>
+                <% if(locals.user){%>
+                <div>
+                    <textarea name="comment" id="comment" cols="30" rows="10"></textarea>
+                    <button id="btncomment" onclick="givecomment('<%= post._id%>', '<%= post.author._id%>') ">CMT</button>
+                </div>
+                <%}else{%>
+                <div>
+                    <p>Please login or register first idiot mf</p>
+                    <a href="/login"><button id="btnlogin">Login </button></a>
+                </div>
+                <%}%> 
+                
+            </div>
+        </div>
+    </div>
+
+    
+    <div id="section2">
+        <% for ( var i = 0; i < comments.length; i++){%>  
+
+        <div class="com-rep">
+            <div class="com-body">
+                <h3><%= comments[i].commenter.name %></h3>
+                <h4><%= comments[i].created %></h4>
+                <h5><%= comments[i].comment %></h5>
+            </div>
+            <hr>
+            <% if (comments[i].reply){%>
+            <div class="rep-body">
+                <h3><%= post.author.name %> (Author) </h3>
+                <h4><%= comments[i].updated %></h4>
+                <h5><%= comments[i].reply %></h5>
+            </div>
+            <%}%>
+        </div>
+        <%}%>
+    </div> -->
+</body>
+<script>
+    function givecomment(post, author){
+        var data = { post: post, author, comment: $("#comment").val()};
+        $.ajax({
+            url : "/users/givecomment",
+            data : data,
+            type : "POST",
+        }).done(function(result){
+            if (result.status == "error"){
+                alert("Something was wrong");
+                $("#comment").val("");
+                $("#comment").focus();
+            }else{
+                location.reload();
+
+            }
+        });  // this is step 23
+    };
+
+    function givelike(post,type){
+        var data = { post: post, type: type};
+        $.ajax({
+            url : "/users/givelike",
+            data : data,
+            type : "POST",
+        }).done(function(result){
+            if (result.status == "error"){
+                alert("Something was wrong");
+                
+            }else{
+                location.reload();
+
+            }
+        });  // this is step 30
+    }
+        // this is step 33 about follow features
+        function followauthor(author ,type){
+        var data = { author: author, type: type};
+        $.ajax({
+            url : "/users/followauthor",
+            data : data,
+            type : "POST",
+        }).done(function(result){
+            if (result.status == "error"){
+                alert("Something was wrong");
+                
+            }else{
+                location.reload();
+
+            }
+        });  
+
+    }
+</script>
+</html>
+
